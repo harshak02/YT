@@ -84,6 +84,7 @@ export const SignIn = () => {
       const res = await axios.post("http://localhost:8800/api/auth/signin", {
         name,password
       })
+      console.log(res);
       dispatch(loginSuccess(res.data));
     } catch (err) {
       dispatch(loginFailure());

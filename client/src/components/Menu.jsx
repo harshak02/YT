@@ -18,6 +18,7 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   flex: 1.25;/*times width*/
@@ -92,6 +93,7 @@ const Title = styled.h2`
 `;
 
 export const Menu = ({ darkMode, setDarkMode }) => {
+  const {currentUser} = useSelector((state)=>state.user);
   return <Container>
     <Wrapper>
       <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
@@ -128,16 +130,19 @@ export const Menu = ({ darkMode, setDarkMode }) => {
         History
       </Item>
       <Hr />
-      <Login>
-        <TextCustom>Sign in to like the videos, comment and subscribe.</TextCustom>
-        <Link to="/signin" style={{ textDecoration: "none" }}>
-          <Button>
-            <AccountCircleOutlinedIcon />
-            SIGN IN
-          </Button>
-        </Link>
-      </Login>
-      <Hr />
+        {!currentUser &&
+          <>
+            <Login>
+            <TextCustom>Sign in to like the videos, comment and subscribe.</TextCustom>
+              <Link to="signin" style={{ textDecoration: "none" }}>
+                <Button>
+                  <AccountCircleOutlinedIcon />
+                  SIGN IN
+                </Button>
+              </Link>
+            </Login>
+          </>
+        }
       <Title>BEST OF YOUTUBE</Title>
       <Item>
         <LibraryMusicOutlinedIcon />

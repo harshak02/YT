@@ -2,8 +2,7 @@ import jwt from "jsonwebtoken";
 import { createError } from "./error.js";
 
 export const verifyToken = async (req,res,next) => {
-    // const token = req.cookies.access_token
-    const token = req.body.token //sending manually
+    const token = req.cookies.access_token || req.body.token;
     if(!token){
         return next(createError(401,"Unauthenticated User!"));
     }

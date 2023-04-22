@@ -39,14 +39,14 @@ export const Home = ({type}) => {
     }
     fetchVideos();
   },[type,currentUser]);//type is arguement -- props
-
   return (
+
     <Container>
       {videos.length === 0 ? (
         <Warn>Please sign in or subscribe to view this section.</Warn>
       ) : (
         videos.map((singleVideo) => (
-          <Card key={singleVideo._id} video={singleVideo} />
+          <Card type={type} key={singleVideo._id} video={singleVideo} />
         ))
       )}
     </Container>

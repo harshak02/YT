@@ -59,7 +59,6 @@ const Info = styled.div`
 export const Card = ({type,video}) => {
 
   const [channel,setChannel] = useState({});
-
   useEffect(()=> {
     const fetchChannel = async ()=> {
       const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`);
@@ -68,16 +67,17 @@ export const Card = ({type,video}) => {
     fetchChannel();
   },[video]);//type is arguement -- props
 
+  //that sm is kept beacuse to resolve the conflicts for the recommendations section later on we will do crct
   return (
     <Link to="/video/test" style={{ textDecoration : "none"}}>
     <Container type={type}>
-        <Image type={type} src={video.imgUrl} />
+        <Image type={type} src={type !== "sm" ? video.imgUrl : "abcd"} />
         <Details type={type} >
             <ChannelImage type={type} src={channel.img} />
             <Texts>
-                <Title> {video.title} </Title>
+                <Title> {type !== "sm" ? video.title : "sample"} </Title>
                 <ChannelName>{ channel.name } </ChannelName>
-                <Info>{video.views} views <CircleIcon sx={{ fontSize: 8 }} /> {format(video.createdAt)}</Info>
+                <Info>{type !== "sm" ? video.views : "100"} views <CircleIcon sx={{ fontSize: 8 }} /> {format(type !== "sm" ? video.createdAt : "23-10-2022")}</Info>
             </Texts>
         </Details>
     </Container>
