@@ -92,7 +92,7 @@ export const Navbar = () => {
             <SearchOutlinedIcon />
           </IconCustom>
         </Search>
-        {currentUser ? (
+        {currentUser.otherDetails ? (
             <User>
               <VideoCallOutlinedIcon />
               <Avatar src={currentUser.otherDetails !== null ? currentUser.otherDetails.img : "abcd"} />
