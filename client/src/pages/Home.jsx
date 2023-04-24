@@ -28,7 +28,6 @@ export const Home = ({type}) => {
       }
       else{
         try{
-          console.log(currentUser);
           const res = await axios.post(`http://localhost:8800/api/videos/sub`,{
             token : currentUser.token
           });
