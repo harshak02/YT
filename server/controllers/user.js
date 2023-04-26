@@ -43,10 +43,9 @@ export const getUser = async (req,res,next) => {
         if(!user){
             return next(createError(404,"User not found!"));
         }
-        res.status(200).json({
-            success : true,
+        res.status(200).json(
             user
-        });
+        );
     } catch (err) {
         return next(err);
     }

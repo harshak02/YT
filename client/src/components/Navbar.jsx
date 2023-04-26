@@ -82,7 +82,6 @@ const Avatar = styled.img`
 export const Navbar = () => {
 
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
   return (
     <Container>
       <Wrapper>
@@ -92,11 +91,11 @@ export const Navbar = () => {
             <SearchOutlinedIcon />
           </IconCustom>
         </Search>
-        {currentUser.otherDetails ? (
+        {currentUser ? (
             <User>
               <VideoCallOutlinedIcon />
-              <Avatar src={currentUser.otherDetails !== null ? currentUser.otherDetails.img : "abcd"} />
-              {currentUser.otherDetails !== null ? currentUser.otherDetails.name : "sampleName"}
+              <Avatar src={currentUser !== null ? currentUser.otherDetails.img : "abcd"} />
+              {currentUser !== null ? currentUser.otherDetails.name : "sampleName"}
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>

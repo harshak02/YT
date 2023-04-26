@@ -75,10 +75,9 @@ export const getVideo = async (req, res, next) => {
             return next(createError(404, "Video not found!"));
         }
 
-        res.status(200).json({
-            success: true,
+        res.status(200).json(
             video
-        })
+        )
     } catch (err) {
         next(err);
     }

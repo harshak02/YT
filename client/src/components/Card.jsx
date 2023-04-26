@@ -59,17 +59,18 @@ const Info = styled.div`
 export const Card = ({type,video}) => {
 
   const [channel,setChannel] = useState({});
+  //useEffect works only on reloading the page
   useEffect(()=> {
     const fetchChannel = async ()=> {
       const res = await axios.get(`http://localhost:8800/api/users/find/${video.userId}`);
-      setChannel(res.data.user);
+      setChannel(res.data);
     }
     fetchChannel();
   },[video]);//type is arguement -- props
 
   //that sm is kept beacuse to resolve the conflicts for the recommendations section later on we will do crct
   return (
-    <Link to="/video/test" style={{ textDecoration : "none"}}>
+    <Link to={`/video/${video._id}`} style={{ textDecoration : "none"}}>
     <Container type={type}>
         <Image type={type} src={type !== "sm" ? video.imgUrl : "abcd"} />
         <Details type={type} >

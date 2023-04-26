@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CircleIcon from "@mui/icons-material/Circle";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -7,6 +7,12 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import { Comments } from "../components/Comments";
 import { Card } from "../components/Card";
+import { useDispatch } from 'react-redux';
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import { fetchSuccess } from "../redux/videoSlice";
+import { format } from "timeago.js";
 
 const Container = styled.div`
   display: flex;
@@ -112,6 +118,35 @@ const Subscribe = styled.button`
 
 
 export const Video = () => {
+
+  const {currentVideo} = useSelector((state) => state.video);
+
+  //why reducer for current Video fetching and why ot for the channel name means 
+  //by using the usestate if any changes are made then after refreshing the page only we can see them
+  //but by using the useSelector the immedidate changes can be seen like (liking the post) (disliking post)
+  //etc
+
+  const dispatch = useDispatch();
+
+  //to get video id from the params comes in router of react
+  const path = useLocation().pathname.split("/")[2];
+  const [channel,setChannel] = useState({});
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      try {
+        const videoRes = await axios.get(`http://localhost:8800/api/videos/find/${path}`);
+        const channelRes = await axios.get(`http://localhost:8800/api/users/find/${videoRes.data.userId}`);
+        setChannel(channelRes.data);
+        dispatch(fetchSuccess(videoRes.data));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchData();    
+  },[dispatch,path]);
+
   return (
     <Container>
       <Content>
@@ -126,17 +161,17 @@ export const Video = () => {
             allowfullscreen
           ></iframe>
         </VideoWrapper>
-        <Title>Test Video</Title>
+        <Title>{currentVideo.title}</Title>
         <Details>
           <Info>
-            660,998 views <CircleIcon sx={{ fontSize: 8 }} /> 1 day ago
+            {currentVideo.views} views <CircleIcon sx={{ fontSize: 8 }} /> {format(currentVideo.createdAt)}
           </Info>
           <Buttons>
             <Button>
-              <ThumbUpOutlinedIcon /> 123
+              <ThumbUpOutlinedIcon /> {currentVideo.likes?.length}
             </Button>
             <Button>
-              <ThumbDownOffAltOutlinedIcon /> Dislike
+              <ThumbDownOffAltOutlinedIcon /> {currentVideo.dislikes?.length}
             </Button>
             <Button>
               <ReplyOutlinedIcon /> Share
@@ -149,18 +184,12 @@ export const Video = () => {
         <Hr />
         <Channel>
           <ChannelInfo>
-            <Image src="https://imgs.search.brave.com/XcwXat5h5XqWxUwbawesLBl9z0_l552CqjzSAw4Hzmw/rs:fit:520:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC4x/ZDdUUUk2N3B3ZnIw/RjVqcVRnRDFBQUFB/QSZwaWQ9QXBp" />
+            <Image src={channel.img} />
             <ChannelDetail>
-              <ChannelName>Harsha Vlog's</ChannelName>
-              <ChannelCounter>200K subscribers</ChannelCounter>
+              <ChannelName>{channel.name}</ChannelName>
+              <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
               <Description>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                {channel.desc}
               </Description>
             </ChannelDetail>
             <Description />
@@ -170,18 +199,18 @@ export const Video = () => {
         <Comments />
       </Content>
       <Recommendation>
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
-        <Card type="sm" />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
+        <Card type="sm" video={currentVideo} />
       </Recommendation>
     </Container>
   );
