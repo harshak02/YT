@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Youtube from "../img/logo.png";
-import HomeIcon from '@mui/icons-material/Home';
+import HomeIcon from "@mui/icons-material/Home";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
@@ -21,119 +21,123 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Container = styled.div`
-  flex: 1.25;/*times width*/
-  background-color : ${({ theme }) => theme.bg};
-  height : 100%;
-  color : ${({ theme }) => theme.text};
-  font-size : 14px;
-  position : sticky;
-  top : 0;
+  flex: 1.25; /*times width*/
+  background-color: ${({ theme }) => theme.bg};
+  height: 100%;
+  color: ${({ theme }) => theme.text};
+  font-size: 14px;
+  position: sticky;
+  top: 0;
 `;
 
 const Wrapper = styled.div`
-  padding : 18px 26px;
+  padding: 18px 26px;
 `;
 
 const Logo = styled.div`
-  display : flex;
-  align-items : center;
-  gap : 5px;
-  font-weight : bold;
-  margin-bottom : 25px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  margin-bottom: 25px;
 `;
 
 const Img = styled.img`
-  height : 25px;
-  margin-right : 5px;
+  height: 25px;
+  margin-right: 5px;
 `;
 
 const Item = styled.div`
-  display : flex;
-  align-items : center;
-  gap : 20px;/*gap b/w the items*/
-  cursor : pointer;
-  padding : 7.5px 0px;
-  &:hover{
-    background-color : ${({ theme }) => theme.soft};
+  display: flex;
+  align-items: center;
+  gap: 20px; /*gap b/w the items*/
+  cursor: pointer;
+  padding: 7.5px 0px;
+  &:hover {
+    background-color: ${({ theme }) => theme.soft};
   }
 `;
 
 const Hr = styled.hr`
-  margin : 15px 0px;
-  border : 0.5px solid ${({ theme }) => theme.soft};
+  margin: 15px 0px;
+  border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Login = styled.div`
-
-`;
+const Login = styled.div``;
 
 const Button = styled.button`
-  padding : 5px 15px;
-  background-color : transparent;
-  border : 1px solid #3ea6ff;
-  color : #3ea6ff;
-  border-radius : 3px;
-  font-weight : 500;
-  margin-top : 10px;
-  cursor : pointer;
-  display : flex;
-  align-items : center;
-  gap : 5px;
+  padding: 5px 15px;
+  background-color: transparent;
+  border: 1px solid #3ea6ff;
+  color: #3ea6ff;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-top: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 `;
 
 const TextCustom = styled.p`
-  font-size : 13px;
+  font-size: 13px;
 `;
 
 const Title = styled.h2`
-  font-size : 14px;
-  fonnt-weight : 500;
-  color : #aaaaaa;
-  margin-bottom : 20px;
+  font-size: 14px;
+  fonnt-weight: 500;
+  color: #aaaaaa;
+  margin-bottom: 20px;
 `;
 
 export const Menu = ({ darkMode, setDarkMode }) => {
-  const {currentUser} = useSelector((state)=>state.user);
-  return <Container>
-    <Wrapper>
-      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-        <Logo>
-          <Img src={Youtube} />
-          YouTube
-        </Logo>
-      </Link>
-      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+  const { currentUser } = useSelector((state) => state.user);
+  return (
+    <Container>
+      <Wrapper>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Logo>
+            <Img src={Youtube} />
+            YouTube
+          </Logo>
+        </Link>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
+        <Link to="/trends" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <ExploreOutlinedIcon />
+            Explore
+          </Item>
+        </Link>
+        <Link
+          to="/subscriptions"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Item>
+            <SubscriptionsOutlinedIcon />
+            Subscriptions
+          </Item>
+        </Link>
+        <Hr />
         <Item>
-          <HomeIcon />
-          Home
+          <VideoLibraryOutlinedIcon />
+          Library
         </Item>
-      </Link>
-      <Link to="/trends" style={{ textDecoration: "none", color: "inherit" }}>
         <Item>
-          <ExploreOutlinedIcon />
-          Explore
+          <HistoryOutlinedIcon />
+          History
         </Item>
-      </Link>
-      <Link to="/subscriptions" style={{ textDecoration: "none", color: "inherit" }}>
-        <Item>
-          <SubscriptionsOutlinedIcon />
-          Subscriptions
-        </Item>
-      </Link>
-      <Hr />
-      <Item>
-        <VideoLibraryOutlinedIcon />
-        Library
-      </Item>
-      <Item>
-        <HistoryOutlinedIcon />
-        History
-      </Item>
-      <Hr />
-        {!currentUser &&
+        <Hr />
+        {!currentUser.otherDetails && (
           <>
             <Login>
-            <TextCustom>Sign in to like the videos, comment and subscribe.</TextCustom>
+              <TextCustom>
+                Sign in to like the videos, comment and subscribe.
+              </TextCustom>
               <Link to="signin" style={{ textDecoration: "none" }}>
                 <Button>
                   <AccountCircleOutlinedIcon />
@@ -141,50 +145,52 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                 </Button>
               </Link>
             </Login>
+            <Hr />
           </>
-        }
-      <Title>BEST OF YOUTUBE</Title>
-      <Item>
-        <LibraryMusicOutlinedIcon />
-        Music
-      </Item>
-      <Item>
-        <SportsBasketballOutlinedIcon />
-        Sports
-      </Item>
-      <Item>
-        <SportsEsportsOutlinedIcon />
-        Gaming
-      </Item>
-      <Item>
-        <MovieOutlinedIcon />
-        Movies
-      </Item>
-      <Item>
-        <ArticleOutlinedIcon />
-        News
-      </Item>
-      <Item>
-        <LiveTvOutlinedIcon />
-        Live
-      </Item>
-      <Hr />
-      <Item>
-        <SettingsOutlinedIcon />
-        Settings
-      </Item>
-      <Item>
-        <FlagOutlinedIcon />
-        Report
-      </Item>
-      <Item>
-        <HelpOutlineOutlinedIcon />
-        Help
-      </Item>
-      <Item onClick={() => setDarkMode(!darkMode)}>
-        <SettingsBrightnessOutlinedIcon />
-        {darkMode ? "Light Mode" : "Dark Mode"}
-      </Item>
-    </Wrapper>
-  </Container>;
+        )}
+        <Title>BEST OF YOUTUBE</Title>
+        <Item>
+          <LibraryMusicOutlinedIcon />
+          Music
+        </Item>
+        <Item>
+          <SportsBasketballOutlinedIcon />
+          Sports
+        </Item>
+        <Item>
+          <SportsEsportsOutlinedIcon />
+          Gaming
+        </Item>
+        <Item>
+          <MovieOutlinedIcon />
+          Movies
+        </Item>
+        <Item>
+          <ArticleOutlinedIcon />
+          News
+        </Item>
+        <Item>
+          <LiveTvOutlinedIcon />
+          Live
+        </Item>
+        <Hr />
+        <Item>
+          <SettingsOutlinedIcon />
+          Settings
+        </Item>
+        <Item>
+          <FlagOutlinedIcon />
+          Report
+        </Item>
+        <Item>
+          <HelpOutlineOutlinedIcon />
+          Help
+        </Item>
+        <Item onClick={() => setDarkMode(!darkMode)}>
+          <SettingsBrightnessOutlinedIcon />
+          {darkMode ? "Light Mode" : "Dark Mode"}
+        </Item>
+      </Wrapper>
+    </Container>
+  );
 };

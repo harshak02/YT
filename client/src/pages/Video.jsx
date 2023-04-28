@@ -208,7 +208,7 @@ export const Video = () => {
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser.otherDetails._id) ? (
+              {currentVideo.likes?.includes(currentUser.otherDetails && currentUser.otherDetails._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
@@ -216,7 +216,7 @@ export const Video = () => {
               {currentVideo.likes?.length} Likes
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser.otherDetails._id) ? (
+              {currentVideo.dislikes?.includes(currentUser.otherDetails && currentUser.otherDetails._id) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -243,7 +243,7 @@ export const Video = () => {
             <Description />
           </ChannelInfo>
           <Subscribe onClick={handleSubscribe}>
-            {currentUser.otherDetails.subscribedUsers?.includes(channel._id)
+            {currentUser.otherDetails && currentUser.otherDetails.subscribedUsers?.includes(channel._id)
               ? "SUBSCRIBED"
               : "SUBSCRIBE"}
           </Subscribe>
