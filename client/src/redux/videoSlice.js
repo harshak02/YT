@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+//state
 const initialState = {
   currentVideo: null,
   loading: false,
@@ -21,9 +22,11 @@ export const videoSlice = createSlice({
       state.loading = false;
       state.error = true;
     },
+    //immediate actions section
     like: (state, action) => {
       if (!state.currentVideo.likes.includes(action.payload)) {
         state.currentVideo.likes.push(action.payload);
+        //deleting from dislike the user
         state.currentVideo.dislikes.splice(
           state.currentVideo.dislikes.findIndex(
             (userId) => userId === action.payload

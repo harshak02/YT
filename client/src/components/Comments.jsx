@@ -1,6 +1,8 @@
-import React from "react";
+import React , {useEffect, useState} from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   padding : 20px 0px;
@@ -28,20 +30,33 @@ const Input = styled.input`
   width: 100%;
 `;
 
-export const Comments = () => {
+//we no need to use currentVideo._id because aldready in Video we have sent the props of video_id
+export const Comments = ({videoId}) => {
+
+  const [comments , setComments] = useState([]);
+  const { currentUser } = useSelector((state)=>state.user);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/api/comments/${videoId}`);
+        setComments(res.data.comments);//res.data is imp
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchComments();
+  })
+
   return (
     <Container>
       <NewComment>
-        <Avatar src="https://yt3.ggpht.com/yti/APfAmoE-Q0ZLJ4vk3vqmV4Kwp0sbrjxLyB8Q4ZgNsiRH=s88-c-k-c0x00ffffff-no-rj-mo" />
+        <Avatar src={currentUser.otherDetails.img} />
         <Input placeholder="Add a comment..." />
       </NewComment>
-      <Comment/>
-      <Comment/>
-      <Comment/>
-      <Comment/>
-      <Comment/>
-      <Comment/>
-      <Comment/>
+      {comments.map (comment => (
+        <Comment key={comment._id} comment = {comment} />
+      ))}
     </Container>
   );
 };

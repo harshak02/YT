@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userReducer from "./userSlice";
+import userReducer from "./userSlice";//default will import
 import videoReducer from "./videoSlice";
 import {
   persistStore,

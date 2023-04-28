@@ -99,7 +99,7 @@ export const SignIn = () => {
         email : result.user.email,
         img : result.user.photoURL,
       }).then((res)=>{
-        dispatch(loginSuccess(res.data));
+        dispatch(loginSuccess(res.data));//we are sending the user full data so access by "otherDetails"
       })
     }).catch((error)=> {
       console.log(error);
