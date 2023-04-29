@@ -17,6 +17,7 @@ import { fetchSuccess } from "../redux/videoSlice";
 import { format } from "timeago.js";
 import { like, dislike } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
+import { Recommendation } from "../components/Recommendation";
 
 const Container = styled.div`
   display: flex;
@@ -25,10 +26,6 @@ const Container = styled.div`
 
 const Content = styled.div`
   flex: 5;
-`;
-
-const Recommendation = styled.div`
-  flex: 2;
 `;
 
 const VideoWrapper = styled.div`
@@ -121,9 +118,9 @@ const Subscribe = styled.button`
 `;
 
 const VideoFrame = styled.video`
-  max-height : 720px,
-  width : 100%,
-  object-fit : cover
+  max-height : 720px;
+  width : 100%;
+  object-fit : cover;
 `;
 
 export const Video = () => {
@@ -192,11 +189,13 @@ export const Video = () => {
     dispatch(subscription(channel._id)); //because we aldready have the user details in user Slice
   };
 
+  console.log(currentVideo.videoUrl);
+
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl}>
+          <VideoFrame src={currentVideo.videoUrl} controls>
 
           </VideoFrame>
         </VideoWrapper>
@@ -250,20 +249,7 @@ export const Video = () => {
         </Channel>
         <Comments videoId={currentVideo._id}/>
       </Content>
-      <Recommendation>
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-        <Card type="sm" video={currentVideo} />
-      </Recommendation>
+      <Recommendation tags={currentVideo.tags}/>
     </Container>
   );
 };

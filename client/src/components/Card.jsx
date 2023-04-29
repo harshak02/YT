@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: ${(props) => (props.type === "sm" ? "60%" : "100%")};
   height: ${(props) => (props.type === "sm" ? "120px" : "202px")};
   background-color: #999;
   flex: 1;
@@ -72,13 +72,13 @@ export const Card = ({type,video}) => {
   return (
     <Link to={`/video/${video._id}`} style={{ textDecoration : "none"}}>
     <Container type={type}>
-        <Image type={type} src={type !== "sm" ? video.imgUrl : "abcd"} />
+        <Image type={type} src={video.imgUrl} />
         <Details type={type} >
             <ChannelImage type={type} src={channel.img} />
             <Texts>
-                <Title> {type !== "sm" ? video.title : "sample"} </Title>
+                <Title> {video.title} </Title>
                 <ChannelName>{ channel.name } </ChannelName>
-                <Info>{type !== "sm" ? video.views : "100"} views <CircleIcon sx={{ fontSize: 8 }} /> {format(type !== "sm" ? video.createdAt : "23-10-2022")}</Info>
+                <Info>{video.views} views <CircleIcon sx={{ fontSize: 8 }} /> {format(video.createdAt)}</Info>
             </Texts>
         </Details>
     </Container>
