@@ -40,6 +40,8 @@ const Input = styled.input`
   border: none;
   background-color: transparent;
   width: 50%;
+  outline: none;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Button = styled.button`
@@ -65,7 +67,7 @@ const User = styled.div`
   gap: 10px;
   font-weight: 500;
   color: ${({ theme }) => theme.text};
-  cursor : pointer;
+  cursor: pointer;
 `;
 
 const Avatar = styled.img`
@@ -78,24 +80,26 @@ const Avatar = styled.img`
 /*If using padding means use Wrapper Class*/
 
 export const Navbar = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+  const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
   return (
     <>
       <Container>
         <Wrapper>
           <Search>
-            <Input placeholder="Search" />
+            <Input
+              placeholder="Search"
+              onChange={(e) => setQ(e.target.value)}
+            />
             <IconCustom>
-              <SearchOutlinedIcon />
+              <SearchOutlinedIcon onClick={()=>navigate(`/search?q=${q}`)}/>
             </IconCustom>
           </Search>
           {currentUser.otherDetails ? (
             <User>
-              <VideoCallOutlinedIcon
-                onClick={() => setOpen(true)}
-              />
+              <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
               <Avatar
                 src={
                   currentUser.otherDetails !== null
@@ -117,7 +121,7 @@ export const Navbar = () => {
           )}
         </Wrapper>
       </Container>
-      {open && <Upload setOpen = {setOpen}/>}
+      {open && <Upload setOpen={setOpen} />}
     </>
   );
 };
