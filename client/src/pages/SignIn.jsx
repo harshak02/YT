@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice';
 import { auth, provider} from "../firebase.js";
 import { signInWithPopup } from "firebase/auth"
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display : flex;
@@ -73,6 +74,7 @@ const Link = styled.span`
 export const SignIn = () => {
 
   //fetching data by Onchange method in frontend itself
+  const navigate = useNavigate();
   const [name,setName] = useState("");
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
@@ -86,6 +88,7 @@ export const SignIn = () => {
         name,password
       })
       dispatch(loginSuccess(res.data));
+      navigate('/');
     } catch (err) {
       dispatch(loginFailure());
     }
@@ -100,6 +103,7 @@ export const SignIn = () => {
         img : result.user.photoURL,
       }).then((res)=>{
         dispatch(loginSuccess(res.data));//we are sending the user full data so access by "otherDetails"
+        navigate('/');
       })
     }).catch((error)=> {
       console.log(error);

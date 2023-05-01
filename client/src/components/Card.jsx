@@ -68,10 +68,14 @@ export const Card = ({type,video}) => {
     fetchChannel();
   },[video]);//type is arguement -- props
 
+  const handleView = async () => {
+    await axios.put(`http://localhost:8800/api/videos/view/${video._id}`)
+  }
+
   //that sm is kept beacuse to resolve the conflicts for the recommendations section later on we will do crct
   return (
     <Link to={`/video/${video._id}`} style={{ textDecoration : "none"}}>
-    <Container type={type}>
+    <Container type={type} onClick={handleView}>
         <Image type={type} src={video.imgUrl} />
         <Details type={type} >
             <ChannelImage type={type} src={channel.img} />

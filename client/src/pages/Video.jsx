@@ -118,9 +118,9 @@ const Subscribe = styled.button`
 `;
 
 const VideoFrame = styled.video`
-  max-height : 720px;
-  width : 100%;
-  object-fit : cover;
+  max-height: 720px;
+  width: 100%;
+  object-fit: cover;
 `;
 
 export const Video = () => {
@@ -178,7 +178,9 @@ export const Video = () => {
 
   const handleSubscribe = async () => {
     currentUser.otherDetails.subscribedUsers.includes(channel._id)
-      ? await axios.post( `http://localhost:8800/api/users/unsub/${channel._id}`,{
+      ? await axios.post(
+          `http://localhost:8800/api/users/unsub/${channel._id}`,
+          {
             token: currentUser.token,
           }
         )
@@ -188,16 +190,13 @@ export const Video = () => {
 
     dispatch(subscription(channel._id)); //because we aldready have the user details in user Slice
   };
-
-  console.log(currentVideo.videoUrl);
-
+  
   return (
+    
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src={currentVideo.videoUrl} controls>
-
-          </VideoFrame>
+          <VideoFrame src={currentVideo.videoUrl} controls></VideoFrame>
         </VideoWrapper>
         <Title>{currentVideo.title}</Title>
         <Details>
@@ -207,7 +206,9 @@ export const Video = () => {
           </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser.otherDetails && currentUser.otherDetails._id) ? (
+              {currentVideo.likes?.includes(
+                currentUser && currentUser.otherDetails._id
+              ) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
@@ -215,7 +216,9 @@ export const Video = () => {
               {currentVideo.likes?.length} Likes
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser.otherDetails && currentUser.otherDetails._id) ? (
+              {currentVideo.dislikes?.includes(
+                currentUser && currentUser.otherDetails._id
+              ) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -242,14 +245,15 @@ export const Video = () => {
             <Description />
           </ChannelInfo>
           <Subscribe onClick={handleSubscribe}>
-            {currentUser.otherDetails && currentUser.otherDetails.subscribedUsers?.includes(channel._id)
+            {currentUser &&
+            currentUser.otherDetails.subscribedUsers?.includes(channel._id)
               ? "SUBSCRIBED"
               : "SUBSCRIBE"}
           </Subscribe>
         </Channel>
-        <Comments videoId={currentVideo._id}/>
+        <Comments videoId={currentVideo._id} />
       </Content>
-      <Recommendation tags={currentVideo.tags}/>
+      <Recommendation tags={currentVideo.tags} />
     </Container>
   );
 };

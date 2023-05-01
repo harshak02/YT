@@ -94,10 +94,10 @@ export const Navbar = () => {
               onChange={(e) => setQ(e.target.value)}
             />
             <IconCustom>
-              <SearchOutlinedIcon onClick={()=>navigate(`/search?q=${q}`)}/>
+              <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
             </IconCustom>
           </Search>
-          {currentUser.otherDetails ? (
+          {currentUser ? (
             <User>
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
               <Avatar

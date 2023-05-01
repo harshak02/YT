@@ -17,8 +17,11 @@ import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/userSlice';
 
 const Container = styled.div`
   flex: 1.25; /*times width*/
@@ -92,6 +95,12 @@ const Title = styled.h2`
 
 export const Menu = ({ darkMode, setDarkMode }) => {
   const { currentUser } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    dispatch(logout());
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -132,7 +141,7 @@ export const Menu = ({ darkMode, setDarkMode }) => {
           History
         </Item>
         <Hr />
-        {!currentUser.otherDetails && (
+        {!currentUser && (
           <>
             <Login>
               <TextCustom>
@@ -145,6 +154,15 @@ export const Menu = ({ darkMode, setDarkMode }) => {
                 </Button>
               </Link>
             </Login>
+            <Hr />
+          </>
+        )}
+        {currentUser && (
+          <>
+            <Item onClick={handleLogout}>
+              <LogoutIcon />
+              Logout
+            </Item>
             <Hr />
           </>
         )}
